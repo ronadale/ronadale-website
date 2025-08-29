@@ -4,9 +4,9 @@ import { getProjectBySlug, mockProjects } from '@/lib/mock-data';
 import ProjectPageClient from './ProjectPageClient';
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -16,7 +16,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug);
+  const resolvedParams = await params;
+  const project = getProjectBySlug(resolvedParams.slug);
   
   if (!project) {
     return {
@@ -30,8 +31,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   };
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(params.slug);
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const resolvedParams = await params;
+  const project = getProjectBySlug(resolvedParams.slug);
 
   if (!project) {
     notFound();
