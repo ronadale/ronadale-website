@@ -32,10 +32,10 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           </a>
           {image.caption && (
             <p className="feed-caption">
-              {image.caption.split('\n').map((line, i) => (
+              {image.caption.split('\n').map((line, i, arr) => (
                 <span key={i}>
                   {line}
-                  {i < image.caption.split('\n').length - 1 && <br />}
+                  {i < arr.length - 1 && <br />}
                 </span>
               ))}
             </p>
