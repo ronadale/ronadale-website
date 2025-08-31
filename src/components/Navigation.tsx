@@ -37,6 +37,35 @@ const Navigation = () => {
         <Link href="/" className="logo">RONADALE</Link>
       </div>
       
+      <div className="nav-center-wrapper">
+        <div className="nav-right desktop-nav">
+          <Link href="/current">exhibitions</Link>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <Link href="/contact">info</Link>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          {!showEmailInput ? (
+            <a href="#" onClick={handleMailingListClick}>mailing list</a>
+          ) : (
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={handleEmailSubmit}
+              onBlur={handleEmailBlur}
+              autoFocus
+              style={{
+                fontFamily: '"Comic Sans MS", cursive, sans-serif',
+                fontSize: '14px',
+                background: 'none',
+                border: 'none',
+                outline: 'none',
+                textAlign: 'left',
+                width: '80px'
+              }}
+            />
+          )}
+        </div>
+      </div>
       
       <div 
         className="mobile-menu-toggle"
@@ -48,32 +77,6 @@ const Navigation = () => {
           width={19} 
           height={19} 
         />
-      </div>
-      
-      <div className="nav-center-wrapper">
-        <div className="nav-right desktop-nav">
-          <Link href="/current">exhibitions</Link>
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <Link href="/contact">info</Link>
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          {!showEmailInput ? (
-            <a href="#" onClick={handleMailingListClick}>mailing list</a>
-          ) : (
-            <span>
-              mailing list{' '}
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={handleEmailSubmit}
-                onBlur={handleEmailBlur}
-                autoFocus
-                className="email-input"
-                style={{ textAlign: 'left', width: 'auto' }}
-              />
-            </span>
-          )}
-        </div>
       </div>
 
       {showMobileMenu && (
@@ -90,7 +93,15 @@ const Navigation = () => {
               onKeyDown={handleEmailSubmit}
               onBlur={handleEmailBlur}
               autoFocus
-              className="email-input"
+              style={{
+                fontFamily: '"Comic Sans MS", cursive, sans-serif',
+                fontSize: '14px',
+                background: 'none',
+                border: 'none',
+                outline: 'none',
+                textAlign: 'center',
+                width: '120px'
+              }}
             />
           )}
         </div>

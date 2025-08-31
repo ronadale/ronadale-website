@@ -3,63 +3,69 @@
 import { useState } from 'react';
 import ProjectDetails from '@/components/ProjectDetails';
 import ImageGallery from '@/components/ImageGallery';
-import Footer from '@/components/Footer';
-import { Project } from '@/lib/mock-data';
+
+interface SanityProject {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  description?: string;
+  artists?: { name: string; bio?: string }[];
+  startDate?: string;
+  endDate?: string;
+  status: string;
+  images?: { asset: any; caption?: string }[];
+}
 
 interface ProjectPageClientProps {
-  project: Project;
+  project: SanityProject;
 }
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const [expandedText, setExpandedText] = useState(false);
 
-  const formatResidencyPeriod = (period: string) => {
-    const months = {
-      'Jan': 'January',
-      'Feb': 'February', 
-      'Mar': 'March',
-      'Apr': 'April',
-      'May': 'May',
-      'Jun': 'June',
-      'Jul': 'July',
-      'Aug': 'August',
-      'Sep': 'September',
-      'Oct': 'October',
-      'Nov': 'November',
-      'Dec': 'December'
-    };
-    
-    return period.replace(/(\d+)\s+(\w+)/g, (match, day, month) => {
-      return `${months[month as keyof typeof months]} ${day}`;
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
     });
+  };
+
+  const formatDateRange = (startDate?: string, endDate?: string) => {
+    if (startDate && endDate) {
+      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+    }
+    return '';
   };
 
   return (
     <div>
       <div className="page-content">
         <div>
-          <p>{project.artist.name}</p>
+          <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
           <p>{project.title}</p>
-          <p style={{ marginBottom: 0 }}>{formatResidencyPeriod(project.residencyPeriod)}</p>
-          <p className="text-gallery-spacing">
-            <a 
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setExpandedText(!expandedText);
-              }}
-            >
-              text
-            </a>
-          </p>
-          {expandedText && (
+          <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
+          {project.description && (
+            <p className="text-gallery-spacing">
+              <a 
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setExpandedText(!expandedText);
+                }}
+              >
+                text
+              </a>
+            </p>
+          )}
+          {expandedText && project.description && (
             <div style={{ marginTop: '10px' }}>
-              <ProjectDetails project={project} />
+              <p>{project.description}</p>
             </div>
           )}
-          {project.gallery.length > 0 && (
+          {project.images && project.images.length > 0 && (
             <div style={{ marginTop: '10px' }}>
-              <ImageGallery images={project.gallery} />
+              <ImageGallery images={project.images} />
             </div>
           )}
         </div>
