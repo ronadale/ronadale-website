@@ -11,7 +11,7 @@ interface ProjectPageProps {
 
 export async function generateStaticParams() {
   const projects = await client.fetch(PROJECTS_QUERY);
-  return projects.map((project: any) => ({
+  return projects.map((project: { slug: { current: string } }) => ({
     slug: project.slug.current,
   }));
 }

@@ -3,6 +3,16 @@ import Link from 'next/link';
 import { client, PROJECTS_QUERY } from '@/lib/sanity';
 import Footer from '@/components/Footer';
 
+interface SanityProject {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  artists?: { name: string }[];
+  startDate?: string;
+  endDate?: string;
+  status: string;
+}
+
 export const metadata: Metadata = {
   title: 'Exhibitions',
   description: 'Current, upcoming and past artist exhibitions and residencies.',
@@ -11,9 +21,9 @@ export const metadata: Metadata = {
 export default async function Exhibitions() {
   const projects = await client.fetch(PROJECTS_QUERY);
   
-  const currentProjects = projects.filter(p => p.status === 'current');
-  const upcomingProjects = projects.filter(p => p.status === 'upcoming');
-  const pastProjects = projects.filter(p => p.status === 'past');
+  const currentProjects = projects.filter((p: { status: string }) => p.status === 'current');
+  const upcomingProjects = projects.filter((p: { status: string }) => p.status === 'upcoming');
+  const pastProjects = projects.filter((p: { status: string }) => p.status === 'past');
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -23,7 +33,7 @@ export default async function Exhibitions() {
     });
   };
 
-  const formatDateRange = (startDate: string, endDate: string) => {
+  const formatDateRange = (startDate?: string, endDate?: string) => {
     if (startDate && endDate) {
       return `${formatDate(startDate)} - ${formatDate(endDate)}`;
     }
@@ -38,7 +48,7 @@ export default async function Exhibitions() {
           <>
             <h2>CURRENT:</h2>
             <br />
-            {currentProjects.map((project) => (
+            {currentProjects.map((project: SanityProject) => (
               <Link key={project._id} href={`/project/${project.slug.current}`} className="project-item">
                 <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
                 <p>{project.title}</p>
@@ -53,7 +63,7 @@ export default async function Exhibitions() {
           <>
             <h2>UPCOMING:</h2>
             <br />
-            {upcomingProjects.map((project) => (
+            {upcomingProjects.map((project: SanityProject) => (
               <div key={project._id} style={{ 
                 cursor: 'default',
                 marginBottom: '0',
@@ -74,7 +84,7 @@ export default async function Exhibitions() {
           <>
             <h2>PAST:</h2>
             <br />
-            {pastProjects.map((project, index) => (
+            {pastProjects.map((project: SanityProject, index: number) => (
               <div key={project._id}>
                 <Link href={`/project/${project.slug.current}`} className="project-item">
                   <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>

@@ -97,8 +97,4 @@ export const project = defineType({
       media: 'images.0.asset',
     },
   },
-  options: {
-    // Enable delete action
-    actions: ['create', 'update', 'delete', 'duplicate'],
-  },
 })

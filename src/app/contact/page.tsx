@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function Contact() {
-  const { contactText, contactDetails } = mockSiteSettings;
+  const { contactDetails } = mockSiteSettings;
 
   return (
     <div>

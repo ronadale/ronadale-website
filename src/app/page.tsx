@@ -27,7 +27,7 @@ export default async function Home() {
   }
 
   const heroImage = upcomingExhibition.coverImage || upcomingExhibition.images?.[0];
-  const artists = upcomingExhibition.artists?.map(artist => artist.name).join(', ');
+  const artists = upcomingExhibition.artists?.map((artist: { name: string }) => artist.name).join(', ');
   
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

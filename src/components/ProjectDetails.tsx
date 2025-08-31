@@ -5,18 +5,6 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails = ({ project }: ProjectDetailsProps) => {
-  const getSectionTitle = (status: string) => {
-    switch (status) {
-      case 'current':
-        return 'CURRENT';
-      case 'upcoming':
-        return 'UPCOMING';
-      case 'past':
-        return 'PAST';
-      default:
-        return '';
-    }
-  };
 
   return (
     <div>

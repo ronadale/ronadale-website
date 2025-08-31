@@ -7,7 +7,7 @@ interface ProjectListProps {
   title: string;
 }
 
-const ProjectList = ({ projects, title }: ProjectListProps) => {
+const ProjectList = ({ projects }: ProjectListProps) => {
   return (
     <div>
       

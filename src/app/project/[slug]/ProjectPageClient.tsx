@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import ProjectDetails from '@/components/ProjectDetails';
 import ImageGallery from '@/components/ImageGallery';
 
 interface SanityProject {
@@ -13,7 +12,7 @@ interface SanityProject {
   startDate?: string;
   endDate?: string;
   status: string;
-  images?: { asset: any; caption?: string }[];
+  images?: { asset: { _ref: string }; caption?: string }[];
 }
 
 interface ProjectPageClientProps {
