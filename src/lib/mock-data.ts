@@ -46,7 +46,7 @@ export interface SiteSettings {
 export const mockSiteSettings: SiteSettings = {
   title: "Ronadale",
   heroImage: "/hero.jpg",
-  contactText: "A creative sanctuary where artists explore, create, and connect with nature.",
+  contactText: "44 Ronadale road, Craryville NY. Open by Appointment",
   contactDetails: {
     email: "info@ranadale.com",
     address: "44 Ronadale road\nCraryville New York\n12521"
