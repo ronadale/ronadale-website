@@ -24,6 +24,7 @@ export const project = defineType({
       name: 'description',
       title: 'Description',
       type: 'text',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'artists',
@@ -69,16 +70,11 @@ export const project = defineType({
       type: 'array',
       of: [
         {
-          type: 'object',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
           fields: [
-            {
-              name: 'asset',
-              title: 'Image',
-              type: 'image',
-              options: {
-                hotspot: true,
-              },
-            },
             {
               name: 'caption',
               title: 'Caption',
@@ -88,12 +84,89 @@ export const project = defineType({
         },
       ],
     },
+    {
+      name: 'pressLinks',
+      title: 'Press Links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Link Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'url',
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: 'pressDownloads',
+      title: 'Press Downloads (PDFs)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Download Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'file',
+              title: 'PDF File',
+              type: 'file',
+              options: {
+                accept: '.pdf',
+              },
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              media: 'file',
+            },
+          },
+        },
+      ],
+    },
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'status',
-      media: 'images.0.asset',
+      media: 'images.0',
+      artist0: 'artists.0.name',
+      artist1: 'artists.1.name',
+      artist2: 'artists.2.name',
+    },
+    prepare(selection) {
+      const { title, subtitle, media, artist0, artist1, artist2 } = selection;
+      const artists = [artist0, artist1, artist2].filter(Boolean);
+      const artistNames = artists.length > 0 ? artists.join(', ') : null;
+      
+      return {
+        title: title || artistNames || 'Untitled Exhibition',
+        subtitle,
+        media,
+      };
     },
   },
 })

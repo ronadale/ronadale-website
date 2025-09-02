@@ -1,6 +1,5 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { visionTool } from '@sanity/vision'
 
 import { project, artist, siteSettings, infoPage } from './sanity/schemas'
 
@@ -10,11 +9,16 @@ const dataset = 'production'
 export default defineConfig({
   basePath: '/studio',
   name: 'ronadale-studio',
-  title: 'Ronadale Art Residency',
+  title: 'Ronadale',
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool()],
   schema: {
     types: [project, artist, siteSettings, infoPage],
+  },
+  studio: {
+    components: {
+      toolMenu: () => null,
+    },
   },
 })

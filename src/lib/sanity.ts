@@ -45,6 +45,16 @@ export const PROJECT_QUERY = `*[_type == "project" && slug.current == $slug][0] 
     asset->,
     caption
   },
+  pressLinks[] {
+    title,
+    url
+  },
+  pressDownloads[] {
+    title,
+    file {
+      asset->
+    }
+  },
   status,
   startDate,
   endDate,

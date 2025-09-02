@@ -57,7 +57,7 @@ export default async function Home() {
             <Link href={`/project/${upcomingExhibition.slug.current}`}>
               <Image
                 src={urlFor(heroImage.asset).width(1200).quality(90).url()}
-                alt={heroImage.caption || upcomingExhibition.title}
+                alt={heroImage.caption || upcomingExhibition.title || `Exhibition image${artists ? ' for ' + artists : ''}`}
                 width={1200}
                 height={0}
                 priority
@@ -67,7 +67,7 @@ export default async function Home() {
           ) : (
             <Image
               src={urlFor(heroImage.asset).width(1200).quality(90).url()}
-              alt={heroImage.caption || upcomingExhibition.title}
+              alt={heroImage.caption || upcomingExhibition.title || `Exhibition image${artists ? ' for ' + artists : ''}`}
               width={1200}
               height={0}
               priority

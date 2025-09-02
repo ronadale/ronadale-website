@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ImageGallery from '@/components/ImageGallery';
 
 interface SanityProject {
@@ -12,7 +12,9 @@ interface SanityProject {
   startDate?: string;
   endDate?: string;
   status: string;
-  images?: { asset: { _ref: string }; caption?: string }[];
+  images?: { asset: { _id: string; _ref?: string; url?: string }; caption?: string }[];
+  pressLinks?: { title: string; url: string }[];
+  pressDownloads?: { title: string; file: { asset: { url: string } } }[];
 }
 
 interface ProjectPageClientProps {
@@ -21,6 +23,17 @@ interface ProjectPageClientProps {
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const [expandedText, setExpandedText] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 1000);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -45,7 +58,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           <p>{project.title}</p>
           <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
           {project.description && (
-            <p className="text-gallery-spacing">
+            <p style={{ marginBottom: '3em' }}>
               <a 
                 href="#"
                 onClick={(e) => {
@@ -58,8 +71,33 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
             </p>
           )}
           {expandedText && project.description && (
-            <div style={{ marginTop: '10px' }}>
+            <div style={{ width: isMobile ? '100%' : '50%' }}>
               <p>{project.description}</p>
+              
+              {(project.pressLinks && project.pressLinks.length > 0) || (project.pressDownloads && project.pressDownloads.length > 0) ? (
+                <div style={{ marginTop: '1em' }}>
+                  <p>Press:</p>
+                  {project.pressLinks?.map((link, index) => (
+                    <p key={index}>
+                      –{' '}
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">
+                        {link.title}
+                      </a>
+                    </p>
+                  ))}
+                  {project.pressDownloads && project.pressDownloads.length > 0 && (
+                    <div style={{ marginTop: '1em' }}>
+                      {project.pressDownloads.map((download, index) => (
+                        <p key={index}>
+                          <a href={download.file.asset.url} target="_blank" rel="noopener noreferrer">
+                            DOWNLOAD PDF
+                          </a>
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : null}
             </div>
           )}
           {project.images && project.images.length > 0 && (
