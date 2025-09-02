@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import { Analytics } from '@vercel/analytics/react';
 
 const siteTitle = "RONADALE";
 const siteDescription = "44 Ronadale road, Craryville NY. Open by Appointment";
@@ -68,6 +69,7 @@ export default function RootLayout({
         <div className="content-layer">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );
