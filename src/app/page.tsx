@@ -3,7 +3,7 @@ import Link from "next/link";
 import { client, SITE_SETTINGS_QUERY, urlFor } from "@/lib/sanity";
 
 export default async function Home() {
-  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
+  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY, {}, { next: { revalidate: 0 } });
   const upcomingExhibition = siteSettings?.upcomingExhibition;
   
   // Debug logging

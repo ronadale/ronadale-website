@@ -10,7 +10,7 @@ interface ProjectPageProps {
 }
 
 export async function generateStaticParams() {
-  const projects = await client.fetch(PROJECTS_QUERY);
+  const projects = await client.fetch(PROJECTS_QUERY, {}, { next: { revalidate: 0 } });
   return projects.map((project: { slug: { current: string } }) => ({
     slug: project.slug.current,
   }));
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug });
+  const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } });
   
   if (!project) {
     return {
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const resolvedParams = await params;
-  const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug });
+  const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } });
 
   if (!project) {
     notFound();

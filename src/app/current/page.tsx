@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Exhibitions() {
-  const projects = await client.fetch(PROJECTS_QUERY);
+  const projects = await client.fetch(PROJECTS_QUERY, {}, { next: { revalidate: 0 } });
   
   const currentProjects = projects.filter((p: { status: string }) => p.status === 'current');
   const upcomingProjects = projects.filter((p: { status: string }) => p.status === 'upcoming');
