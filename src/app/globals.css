@@ -215,6 +215,14 @@ img {
     z-index: 1001;
     margin: 0;
   }
+  
+  .page-content + .project-footer {
+    position: static;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    left: auto;
+    transform: none;
+  }
 }
 
 .image-feed {
