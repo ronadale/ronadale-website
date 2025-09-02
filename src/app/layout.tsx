@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   keywords: ["art residency", "artists", "contemporary art", "gallery", "exhibitions"],
   authors: [{ name: siteTitle }],
   creator: siteTitle,
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
