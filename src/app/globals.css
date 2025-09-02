@@ -320,5 +320,9 @@ img {
     position: static;
     margin-top: 60px;
     padding: 0;
+    width: auto;
+    left: auto;
+    transform: none;
+    background-color: transparent;
   }
 }
