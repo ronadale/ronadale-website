@@ -29,56 +29,38 @@ const Navigation = () => {
     }
   };
 
-  const handleEmailSubmit = async (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email }),
-        });
-
-        const data = await response.json();
-        
-        if (response.ok) {
-          const form = document.createElement('form');
-          form.method = 'POST';
-          form.action = 'https://ronadale.us16.list-manage.com/subscribe/post';
-          form.target = '_blank';
-          
-          const uField = document.createElement('input');
-          uField.type = 'hidden';
-          uField.name = 'u';
-          uField.value = 'ac2562b4eb29481b9b4e402c0';
-          
-          const idField = document.createElement('input');
-          idField.type = 'hidden';
-          idField.name = 'id';
-          idField.value = '16df52952d';
-          
-          const emailField = document.createElement('input');
-          emailField.type = 'hidden';
-          emailField.name = 'EMAIL';
-          emailField.value = email;
-          
-          form.appendChild(uField);
-          form.appendChild(idField);
-          form.appendChild(emailField);
-          
-          document.body.appendChild(form);
-          form.submit();
-          document.body.removeChild(form);
-          
-          setEmail('');
-          setShowEmailInput(false);
-        } else {
-          console.error('Error:', data.error);
-        }
-      } catch (error) {
-        console.error('Network error:', error);
-      }
+  const handleEmailSubmit = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && email.trim()) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://ronadale.us16.list-manage.com/subscribe/post';
+      form.target = '_blank';
+      
+      const uField = document.createElement('input');
+      uField.type = 'hidden';
+      uField.name = 'u';
+      uField.value = 'ac2562b4eb29481b9b4e402c0';
+      
+      const idField = document.createElement('input');
+      idField.type = 'hidden';
+      idField.name = 'id';
+      idField.value = '16df52952d';
+      
+      const emailField = document.createElement('input');
+      emailField.type = 'hidden';
+      emailField.name = 'EMAIL';
+      emailField.value = email;
+      
+      form.appendChild(uField);
+      form.appendChild(idField);
+      form.appendChild(emailField);
+      
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+      
+      setEmail('');
+      setShowEmailInput(false);
     }
   };
 
