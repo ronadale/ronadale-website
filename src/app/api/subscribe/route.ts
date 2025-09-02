@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const response = await mailchimp.lists.addListMember(
+    await mailchimp.lists.addListMember(
       process.env.MAILCHIMP_AUDIENCE_ID!,
       {
         email_address: email,
@@ -30,11 +30,13 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Mailchimp error:', error);
-    console.error('Error response:', error.response?.body);
     
-    if (error.status === 400 && error.response?.body?.title === 'Member Exists') {
+    const mailchimpError = error as { status?: number; response?: { body?: { title?: string } } };
+    console.error('Error response:', mailchimpError.response?.body);
+    
+    if (mailchimpError.status === 400 && mailchimpError.response?.body?.title === 'Member Exists') {
       return NextResponse.json(
         { message: 'Email already subscribed!' },
         { status: 200 }
