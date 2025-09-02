@@ -39,62 +39,9 @@ export default async function Home() {
 
   return (
     <div>
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        textAlign: 'center',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        minHeight: 'calc(100vh - 220px)'
-      }}>
-        <div style={{ marginBottom: '1em' }}>
-          {heroImage?.asset ? (
-            upcomingExhibition.status === 'current' ? (
-              <Link href={`/project/${upcomingExhibition.slug.current}`}>
-                <Image
-                  src={urlFor(heroImage.asset).width(1200).quality(90).url()}
-                  alt={heroImage.caption || upcomingExhibition.title}
-                  width={1200}
-                  height={0}
-                  priority
-                  style={{ 
-                    width: '100%',
-                    height: '50vh',
-                    objectFit: 'contain'
-                  }}
-                />
-              </Link>
-            ) : (
-              <Image
-                src={urlFor(heroImage.asset).width(1200).quality(90).url()}
-                alt={heroImage.caption || upcomingExhibition.title}
-                width={1200}
-                height={0}
-                priority
-                style={{ 
-                  width: '100%',
-                  height: '50vh',
-                  objectFit: 'contain'
-                }}
-              />
-            )
-          ) : (
-            <div style={{ 
-              width: '100%', 
-              height: '50vh', 
-              background: '#f0f0f0', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center' 
-            }}>
-              <p>No image available</p>
-            </div>
-          )}
-        </div>
-        
-        <div>
+      <div className="homepage-layout">
+        {/* Left side - Exhibition info */}
+        <div className="homepage-text">
           <p>{artists}</p>
           <p>{upcomingExhibition.title}</p>
           {upcomingExhibition.startDate && upcomingExhibition.endDate && (
@@ -103,6 +50,41 @@ export default async function Home() {
             </p>
           )}
         </div>
+
+        {/* Hero image */}
+        {heroImage?.asset ? (
+          upcomingExhibition.status === 'current' ? (
+            <Link href={`/project/${upcomingExhibition.slug.current}`}>
+              <Image
+                src={urlFor(heroImage.asset).width(1200).quality(90).url()}
+                alt={heroImage.caption || upcomingExhibition.title}
+                width={1200}
+                height={0}
+                priority
+                className="homepage-image"
+              />
+            </Link>
+          ) : (
+            <Image
+              src={urlFor(heroImage.asset).width(1200).quality(90).url()}
+              alt={heroImage.caption || upcomingExhibition.title}
+              width={1200}
+              height={0}
+              priority
+              className="homepage-image"
+            />
+          )
+        ) : (
+          <div className="homepage-image" style={{ 
+            background: '#f0f0f0',
+            width: '800px',
+            height: '400px',
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <p>No image available</p>
+          </div>
+        )}
       </div>
       <div className="project-footer">
         <p>44 Ronadale road, Craryville NY. Open by Appointment</p>

@@ -99,7 +99,7 @@ const Navigation = () => {
                 background: 'none',
                 border: 'none',
                 outline: 'none',
-                textAlign: 'center',
+                textAlign: 'left',
                 width: '120px'
               }}
             />

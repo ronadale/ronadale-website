@@ -1,38 +1,42 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { mockSiteSettings } from "@/lib/mock-data";
 import Navigation from "@/components/Navigation";
+
+const siteTitle = "RONADALE";
+const siteDescription = "44 Ronadale road, Craryville NY. Open by Appointment";
+const siteUrl = "https://ronadale.com";
+const heroImage = "/hero.jpg";
 
 export const metadata: Metadata = {
   title: {
-    default: mockSiteSettings.title,
-    template: `%s | ${mockSiteSettings.title}`,
+    default: siteTitle,
+    template: `%s | ${siteTitle}`,
   },
-  description: mockSiteSettings.contactText,
-  keywords: ["art residency", "artists", "contemporary art", "creative sanctuary", "art programs"],
-  authors: [{ name: mockSiteSettings.title }],
-  creator: mockSiteSettings.title,
+  description: siteDescription,
+  keywords: ["art residency", "artists", "contemporary art", "gallery", "exhibitions"],
+  authors: [{ name: siteTitle }],
+  creator: siteTitle,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mountainviewresidency.org",
-    title: mockSiteSettings.title,
-    description: mockSiteSettings.contactText,
-    siteName: mockSiteSettings.title,
+    url: siteUrl,
+    title: siteTitle,
+    description: siteDescription,
+    siteName: siteTitle,
     images: [
       {
-        url: mockSiteSettings.heroImage,
+        url: heroImage,
         width: 1920,
         height: 1080,
-        alt: `${mockSiteSettings.title} - Art Residency Location`,
+        alt: `${siteTitle} - Art Gallery and Residency`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: mockSiteSettings.title,
-    description: mockSiteSettings.contactText,
-    images: [mockSiteSettings.heroImage],
+    title: siteTitle,
+    description: siteDescription,
+    images: [heroImage],
   },
   robots: {
     index: true,
