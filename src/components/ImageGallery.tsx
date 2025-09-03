@@ -32,12 +32,9 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                   alt={image.caption || `Gallery image ${index + 1}`}
                   width={1200}
                   height={800}
-                  style={{ 
-                    width: 'auto', 
-                    height: '90vh'
-                  }}
                   className="gallery-image"
-                  sizes="(max-width: 480px) 100vw, 90vh"
+                  sizes="(max-width: 480px) 100vw, (max-width: 1000px) 90vw, 80vw"
+                  priority={index < 2}
                 />
               </a>
               {image.caption && (
