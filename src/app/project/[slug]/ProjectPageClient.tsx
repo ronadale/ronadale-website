@@ -45,7 +45,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
 
   const formatDateRange = (startDate?: string, endDate?: string) => {
     if (startDate && endDate) {
-      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+      return `${formatDate(startDate)} — ${formatDate(endDate)}`;
     }
     return '';
   };

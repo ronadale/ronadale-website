@@ -46,7 +46,7 @@ export default async function Home() {
           <p>{upcomingExhibition.title}</p>
           {upcomingExhibition.startDate && upcomingExhibition.endDate && (
             <p>
-              {formatDate(upcomingExhibition.startDate)} - {formatDate(upcomingExhibition.endDate)}
+              {formatDate(upcomingExhibition.startDate)} — {formatDate(upcomingExhibition.endDate)}
             </p>
           )}
         </div>

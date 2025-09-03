@@ -35,7 +35,7 @@ export default async function Exhibitions() {
 
   const formatDateRange = (startDate?: string, endDate?: string) => {
     if (startDate && endDate) {
-      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+      return `${formatDate(startDate)} — ${formatDate(endDate)}`;
     }
     return '';
   };
