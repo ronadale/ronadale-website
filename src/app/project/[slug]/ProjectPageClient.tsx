@@ -58,7 +58,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           <p>{project.title}</p>
           <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
           {project.description && (
-            <p style={{ marginBottom: '3em' }}>
+            <p style={{ marginBottom: '1em' }}>
               <a 
                 href="#"
                 onClick={(e) => {
