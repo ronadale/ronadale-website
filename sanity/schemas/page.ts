@@ -1,8 +1,8 @@
 import { defineType } from 'sanity'
 
-export const project = defineType({
-  name: 'project',
-  title: 'Exhibitions',
+export const page = defineType({
+  name: 'page',
+  title: 'Pages',
   type: 'document',
   fields: [
     {
@@ -58,16 +58,28 @@ export const project = defineType({
       name: 'artists',
       title: 'Artists',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'artist' }] }],
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Artist Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'name',
+            },
+          },
+        },
+      ],
     },
     {
-      name: 'startDate',
-      title: 'Start Date',
-      type: 'date',
-    },
-    {
-      name: 'endDate',
-      title: 'End Date',
+      name: 'date',
+      title: 'Date',
       type: 'date',
     },
     {
@@ -76,18 +88,21 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Current', value: 'current' },
-          { title: 'Upcoming', value: 'upcoming' },
-          { title: 'Past', value: 'past' },
+          { title: 'Draft', value: 'draft' },
+          { title: 'Published', value: 'published' },
+          // Legacy values for migration
+          { title: 'Current (Legacy)', value: 'current' },
+          { title: 'Upcoming (Legacy)', value: 'upcoming' },
+          { title: 'Past (Legacy)', value: 'past' },
         ],
       },
       validation: (Rule) => Rule.required(),
     },
     {
       name: 'coverImage',
-      title: 'Cover Image (for homepage)',
+      title: 'Cover Image',
       type: 'image',
-      description: 'Main image shown on homepage when this project is featured',
+      description: 'Main image for this page',
       options: {
         hotspot: true,
       },
@@ -219,7 +234,7 @@ export const project = defineType({
       const artistNames = artists.length > 0 ? artists.join(', ') : null;
       
       return {
-        title: title || artistNames || 'Untitled Exhibition',
+        title: title || artistNames || 'Untitled Page',
         subtitle,
         media,
       };

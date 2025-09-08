@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/lib/sanity';
 
 interface SanityImage {
   asset: { _id: string; _ref?: string };
-  caption?: string;
+  caption?: any; // Can be string (legacy) or Portable Text array
 }
 
 interface ImageGalleryProps {
@@ -38,14 +39,33 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                 />
               </a>
               {image.caption && (
-                <p className="feed-caption">
-                  {image.caption.split('\n').map((line, i, arr) => (
-                    <span key={i}>
-                      {line}
-                      {i < arr.length - 1 && <br />}
-                    </span>
-                  ))}
-                </p>
+                <div className="feed-caption">
+                  {typeof image.caption === 'string' ? (
+                    // Legacy string captions
+                    <p>
+                      {image.caption.split('\n').map((line, i, arr) => (
+                        <span key={i}>
+                          {line}
+                          {i < arr.length - 1 && <br />}
+                        </span>
+                      ))}
+                    </p>
+                  ) : (
+                    // New rich text captions
+                    <PortableText 
+                      value={image.caption}
+                      components={{
+                        marks: {
+                          link: ({ children, value }) => (
+                            <a href={value.href} target="_blank" rel="noopener noreferrer">
+                              {children}
+                            </a>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                </div>
               )}
             </div>
           );

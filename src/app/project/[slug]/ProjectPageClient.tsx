@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { PortableText } from '@portabletext/react';
 import ImageGallery from '@/components/ImageGallery';
 
 interface SanityProject {
   _id: string;
   title: string;
   slug: { current: string };
-  description?: string;
+  description?: any; // Can be string (legacy) or Portable Text array
   artists?: { name: string; bio?: string }[];
   startDate?: string;
   endDate?: string;
@@ -71,8 +72,23 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
             </p>
           )}
           {expandedText && project.description && (
-            <div style={{ width: isMobile ? '100%' : '50%' }}>
-              <p>{project.description}</p>
+            <div className="content-width">
+              {typeof project.description === 'string' ? (
+                <p>{project.description}</p>
+              ) : (
+                <PortableText 
+                  value={project.description}
+                  components={{
+                    marks: {
+                      link: ({ children, value }) => (
+                        <a href={value.href} target="_blank" rel="noopener noreferrer">
+                          {children}
+                        </a>
+                      ),
+                    },
+                  }}
+                />
+              )}
               
               {(project.pressLinks && project.pressLinks.length > 0) || (project.pressDownloads && project.pressDownloads.length > 0) ? (
                 <div style={{ marginTop: '1em' }}>

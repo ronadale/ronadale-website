@@ -6,6 +6,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("/typeface/comic-sans-italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -261,7 +268,8 @@ img {
 
 
 .content-width {
-  width: 50%;
+  max-width: 800px;
+  width: 100%;
 }
 
 .homepage-layout {
@@ -285,11 +293,22 @@ img {
 
 @media (min-width: 1000px) {
   .homepage-layout {
-    text-align: center;
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    align-items: start;
+  }
+  
+  .homepage-text {
+    grid-column: 1;
+    display: block;
+    margin-right: 0;
   }
 
   .homepage-image {
+    grid-column: 2;
+    justify-self: center;
     max-width: 600px;
+    display: block;
   }
 }
 
