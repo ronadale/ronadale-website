@@ -83,3 +83,45 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
     }
   }
 }`
+
+export const PAGES_QUERY = `*[_type == "page"] | order(_createdAt desc) {
+  _id,
+  title,
+  slug,
+  description,
+  images[] {
+    asset->,
+    caption
+  },
+  status,
+  date,
+  artists[] {
+    name
+  }
+}`
+
+export const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
+  _id,
+  title,
+  slug,
+  description,
+  images[] {
+    asset->,
+    caption
+  },
+  pressLinks[] {
+    title,
+    url
+  },
+  pressDownloads[] {
+    title,
+    file {
+      asset->
+    }
+  },
+  status,
+  date,
+  artists[] {
+    name
+  }
+}`
