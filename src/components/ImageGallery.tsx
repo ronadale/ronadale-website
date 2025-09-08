@@ -4,7 +4,18 @@ import { urlFor } from '@/lib/sanity';
 
 interface SanityImage {
   asset: { _id: string; _ref?: string };
-  caption?: any; // Can be string (legacy) or Portable Text array
+  caption?: string | Array<{
+    _type: 'block';
+    children: Array<{
+      _type: 'span';
+      text: string;
+      marks?: string[];
+    }>;
+    markDefs?: Array<{
+      _type: 'link';
+      href: string;
+    }>;
+  }>;
 }
 
 interface ImageGalleryProps {

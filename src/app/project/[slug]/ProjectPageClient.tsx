@@ -8,7 +8,18 @@ interface SanityProject {
   _id: string;
   title: string;
   slug: { current: string };
-  description?: any; // Can be string (legacy) or Portable Text array
+  description?: string | Array<{
+    _type: 'block';
+    children: Array<{
+      _type: 'span';
+      text: string;
+      marks?: string[];
+    }>;
+    markDefs?: Array<{
+      _type: 'link';
+      href: string;
+    }>;
+  }>;
   artists?: { name: string; bio?: string }[];
   startDate?: string;
   endDate?: string;
@@ -24,17 +35,6 @@ interface ProjectPageClientProps {
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const [expandedText, setExpandedText] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
