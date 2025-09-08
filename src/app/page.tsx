@@ -54,7 +54,7 @@ export default async function Home() {
         {/* Hero image */}
         {heroImage?.asset ? (
           upcomingExhibition.status === 'current' ? (
-            <Link href={`/project/${upcomingExhibition.slug.current}`}>
+            <Link href={`/exhibitions/${upcomingExhibition.slug.current}`}>
               <Image
                 src={urlFor(heroImage.asset).width(1200).quality(90).url()}
                 alt={heroImage.caption || upcomingExhibition.title || `Exhibition image${artists ? ' for ' + artists : ''}`}

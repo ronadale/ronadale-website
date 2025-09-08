@@ -49,7 +49,7 @@ export default async function Exhibitions() {
             <h2>CURRENT:</h2>
             <br />
             {currentProjects.map((project: SanityProject) => (
-              <Link key={project._id} href={`/project/${project.slug.current}`} className="project-item">
+              <Link key={project._id} href={`/exhibitions/${project.slug.current}`} className="project-item">
                 <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
                 <p>{project.title}</p>
                 <p>{formatDateRange(project.startDate, project.endDate)}</p>
@@ -86,7 +86,7 @@ export default async function Exhibitions() {
             <br />
             {pastProjects.map((project: SanityProject, index: number) => (
               <div key={project._id}>
-                <Link href={`/project/${project.slug.current}`} className="project-item">
+                <Link href={`/exhibitions/${project.slug.current}`} className="project-item">
                   <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
                   <p>{project.title}</p>
                   <p>{formatDateRange(project.startDate, project.endDate)}</p>
