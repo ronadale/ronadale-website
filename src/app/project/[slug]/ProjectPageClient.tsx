@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PortableText } from '@portabletext/react';
 import ImageGallery from '@/components/ImageGallery';
 

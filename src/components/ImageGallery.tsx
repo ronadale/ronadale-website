@@ -25,6 +25,19 @@ interface ImageGalleryProps {
 const ImageGallery = ({ images }: ImageGalleryProps) => {
   if (!images || images.length === 0) return null;
 
+  const getAltText = (caption: SanityImage['caption'], index: number): string => {
+    if (typeof caption === 'string') {
+      return caption;
+    }
+    if (Array.isArray(caption) && caption.length > 0) {
+      const firstBlock = caption[0];
+      if (firstBlock.children && firstBlock.children.length > 0) {
+        return firstBlock.children[0].text || `Gallery image ${index + 1}`;
+      }
+    }
+    return `Gallery image ${index + 1}`;
+  };
+
   return (
     <div className="image-feed">
       {images
@@ -41,7 +54,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
               >
                 <Image
                   src={imageUrl}
-                  alt={image.caption || `Gallery image ${index + 1}`}
+                  alt={getAltText(image.caption, index)}
                   width={1200}
                   height={800}
                   className="gallery-image"
