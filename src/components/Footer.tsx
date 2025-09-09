@@ -20,30 +20,28 @@ interface FooterData {
 
 const Footer = async () => {
   const footer: FooterData | null = await client.fetch(FOOTER_QUERY, {}, { next: { revalidate: 0 } });
-  
-  const defaultText = "44 Ronadale road, Craryville NY. Open by Appointment";
+
+  if (!footer?.text) {
+    return null;
+  }
 
   return (
     <footer className="footer">
-      {footer?.text ? (
-        <PortableText 
-          value={footer.text}
-          components={{
-            marks: {
-              link: ({ children, value }) => (
-                <a href={value.href} target="_blank" rel="noopener noreferrer">
-                  {children}
-                </a>
-              ),
-            },
-            block: {
-              normal: ({ children }) => <p>{children}</p>,
-            },
-          }}
-        />
-      ) : (
-        <p>{defaultText}</p>
-      )}
+      <PortableText 
+        value={footer.text}
+        components={{
+          marks: {
+            link: ({ children, value }) => (
+              <a href={value.href} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            ),
+          },
+          block: {
+            normal: ({ children }) => <p>{children}</p>,
+          },
+        }}
+      />
     </footer>
   );
 };

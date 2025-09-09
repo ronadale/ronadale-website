@@ -90,8 +90,8 @@ export default async function Home() {
           </div>
         )}
       </div>
-      <div className="project-footer">
-        {footer?.text ? (
+      {footer?.text && (
+        <div className="project-footer">
           <PortableText 
             value={footer.text}
             components={{
@@ -107,10 +107,8 @@ export default async function Home() {
               },
             }}
           />
-        ) : (
-          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

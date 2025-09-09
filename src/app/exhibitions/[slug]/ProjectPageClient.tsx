@@ -141,8 +141,8 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
           )}
         </div>
       </div>
-      <div className="project-footer">
-        {footer?.text ? (
+      {footer?.text && (
+        <div className="project-footer">
           <PortableText 
             value={footer.text}
             components={{
@@ -158,10 +158,8 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
               },
             }}
           />
-        ) : (
-          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

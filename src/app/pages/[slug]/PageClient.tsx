@@ -133,8 +133,8 @@ export default function PageClient({ page, footer }: PageClientProps) {
           )}
         </div>
       </div>
-      <div className="project-footer">
-        {footer?.text ? (
+      {footer?.text && (
+        <div className="project-footer">
           <PortableText 
             value={footer.text}
             components={{
@@ -150,10 +150,8 @@ export default function PageClient({ page, footer }: PageClientProps) {
               },
             }}
           />
-        ) : (
-          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
