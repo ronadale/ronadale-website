@@ -79,7 +79,7 @@ const Navigation = () => {
       
       <div className="nav-center-wrapper">
         <div className="nav-right desktop-nav">
-          <Link href="/current">exhibitions</Link>
+          <Link href="/exhibitions">exhibitions</Link>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <Link href="/contact">info</Link>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -123,7 +123,7 @@ const Navigation = () => {
 
       {showMobileMenu && (
         <div className="mobile-menu">
-          <Link href="/current" onClick={() => setShowMobileMenu(false)}>exhibitions</Link>
+          <Link href="/exhibitions" onClick={() => setShowMobileMenu(false)}>exhibitions</Link>
           <Link href="/contact" onClick={() => setShowMobileMenu(false)}>info</Link>
           <a href="#" onClick={handleMailingListClick}>mailing list</a>
         </div>
