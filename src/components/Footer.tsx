@@ -40,6 +40,9 @@ const Footer = async () => {
           block: {
             normal: ({ children }) => <p>{children}</p>,
           },
+          types: {
+            lineBreak: () => <br />,
+          },
         }}
       />
     </footer>

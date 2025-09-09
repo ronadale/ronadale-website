@@ -104,6 +104,9 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
                         </a>
                       ),
                     },
+                    types: {
+                      lineBreak: () => <br />,
+                    },
                   }}
                 />
               )}
@@ -155,6 +158,9 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
               },
               block: {
                 normal: ({ children }) => <p>{children}</p>,
+              },
+              types: {
+                lineBreak: () => <br />,
               },
             }}
           />

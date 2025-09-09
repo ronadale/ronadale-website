@@ -36,6 +36,26 @@ export const footer = defineType({
             ],
           },
         },
+        {
+          type: 'object',
+          name: 'lineBreak',
+          title: 'Line Break',
+          fields: [
+            {
+              name: 'style',
+              type: 'string',
+              initialValue: 'lineBreak',
+            }
+          ],
+          preview: {
+            prepare() {
+              return {
+                title: 'Line Break',
+                subtitle: '---'
+              }
+            }
+          }
+        },
       ],
       description: 'The text that appears in the footer across all pages',
       validation: (Rule) => Rule.required(),

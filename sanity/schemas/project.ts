@@ -51,6 +51,26 @@ export const project = defineType({
             ],
           },
         },
+        {
+          type: 'object',
+          name: 'lineBreak',
+          title: 'Line Break',
+          fields: [
+            {
+              name: 'style',
+              type: 'string',
+              initialValue: 'lineBreak',
+            }
+          ],
+          preview: {
+            prepare() {
+              return {
+                title: 'Line Break',
+                subtitle: '---'
+              }
+            }
+          }
+        },
       ],
       validation: (Rule) => Rule.required(),
     },
@@ -133,6 +153,26 @@ export const project = defineType({
                       },
                     ],
                   },
+                },
+                {
+                  type: 'object',
+                  name: 'lineBreak',
+                  title: 'Line Break',
+                  fields: [
+                    {
+                      name: 'style',
+                      type: 'string',
+                      initialValue: 'lineBreak',
+                    }
+                  ],
+                  preview: {
+                    prepare() {
+                      return {
+                        title: 'Line Break',
+                        subtitle: '---'
+                      }
+                    }
+                  }
                 },
               ],
             },

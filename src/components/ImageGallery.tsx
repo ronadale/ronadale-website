@@ -86,6 +86,9 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                             </a>
                           ),
                         },
+                        types: {
+                          lineBreak: () => <br />,
+                        },
                       }}
                     />
                   )}

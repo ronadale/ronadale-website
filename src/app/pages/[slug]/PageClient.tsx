@@ -96,6 +96,9 @@ export default function PageClient({ page, footer }: PageClientProps) {
                         </a>
                       ),
                     },
+                    types: {
+                      lineBreak: () => <br />,
+                    },
                   }}
                 />
               )}
@@ -147,6 +150,9 @@ export default function PageClient({ page, footer }: PageClientProps) {
               },
               block: {
                 normal: ({ children }) => <p>{children}</p>,
+              },
+              types: {
+                lineBreak: () => <br />,
               },
             }}
           />

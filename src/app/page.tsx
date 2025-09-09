@@ -105,6 +105,9 @@ export default async function Home() {
               block: {
                 normal: ({ children }) => <p>{children}</p>,
               },
+              types: {
+                lineBreak: () => <br />,
+              },
             }}
           />
         </div>
