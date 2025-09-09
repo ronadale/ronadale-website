@@ -51,27 +51,11 @@ export const project = defineType({
             ],
           },
         },
-        {
-          type: 'object',
-          name: 'lineBreak',
-          title: 'Line Break',
-          fields: [
-            {
-              name: 'style',
-              type: 'string',
-              initialValue: 'lineBreak',
-            }
-          ],
-          preview: {
-            prepare() {
-              return {
-                title: 'Line Break',
-                subtitle: '---'
-              }
-            }
-          }
-        },
       ],
+      options: {
+        // Allow empty blocks for line breaks
+        allow: ['block']
+      },
       validation: (Rule) => Rule.required(),
     },
     {

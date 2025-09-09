@@ -92,23 +92,25 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
           {expandedText && project.description && (
             <div className="content-width">
               {typeof project.description === 'string' ? (
-                <p>{project.description}</p>
+                <p style={{ whiteSpace: 'pre-wrap' }}>{project.description}</p>
               ) : (
-                <PortableText 
-                  value={project.description}
-                  components={{
-                    marks: {
-                      link: ({ children, value }) => (
-                        <a href={value.href} target="_blank" rel="noopener noreferrer">
-                          {children}
-                        </a>
-                      ),
-                    },
-                    types: {
-                      lineBreak: () => <br />,
-                    },
-                  }}
-                />
+                <div style={{ whiteSpace: 'pre-line' }}>
+                  <PortableText 
+                    value={project.description}
+                    components={{
+                      block: {
+                        normal: ({ children }) => <p>{children}</p>,
+                      },
+                      marks: {
+                        link: ({ children, value }) => (
+                          <a href={value.href} target="_blank" rel="noopener noreferrer">
+                            {children}
+                          </a>
+                        ),
+                      },
+                    }}
+                  />
+                </div>
               )}
               
               {(project.pressLinks && project.pressLinks.length > 0) || (project.pressDownloads && project.pressDownloads.length > 0) ? (

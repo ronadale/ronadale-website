@@ -76,21 +76,23 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                     </p>
                   ) : (
                     // New rich text captions
-                    <PortableText 
-                      value={image.caption}
-                      components={{
-                        marks: {
-                          link: ({ children, value }) => (
-                            <a href={value.href} target="_blank" rel="noopener noreferrer">
-                              {children}
-                            </a>
-                          ),
-                        },
-                        types: {
-                          lineBreak: () => <br />,
-                        },
-                      }}
-                    />
+                    <div style={{ whiteSpace: 'pre-line' }}>
+                      <PortableText 
+                        value={image.caption}
+                        components={{
+                          block: {
+                            normal: ({ children }) => <p>{children}</p>,
+                          },
+                          marks: {
+                            link: ({ children, value }) => (
+                              <a href={value.href} target="_blank" rel="noopener noreferrer">
+                                {children}
+                              </a>
+                            ),
+                          },
+                        }}
+                      />
+                    </div>
                   )}
                 </div>
               )}

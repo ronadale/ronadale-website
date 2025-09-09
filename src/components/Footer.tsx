@@ -27,24 +27,23 @@ const Footer = async () => {
 
   return (
     <footer className="footer">
-      <PortableText 
-        value={footer.text}
-        components={{
-          marks: {
-            link: ({ children, value }) => (
-              <a href={value.href} target="_blank" rel="noopener noreferrer">
-                {children}
-              </a>
-            ),
-          },
-          block: {
-            normal: ({ children }) => <p>{children}</p>,
-          },
-          types: {
-            lineBreak: () => <br />,
-          },
-        }}
-      />
+      <div style={{ whiteSpace: 'pre-line' }}>
+        <PortableText 
+          value={footer.text}
+          components={{
+            marks: {
+              link: ({ children, value }) => (
+                <a href={value.href} target="_blank" rel="noopener noreferrer">
+                  {children}
+                </a>
+              ),
+            },
+            block: {
+              normal: ({ children }) => <p>{children}</p>,
+            },
+          }}
+        />
+      </div>
     </footer>
   );
 };
