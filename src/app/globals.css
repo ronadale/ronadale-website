@@ -248,7 +248,7 @@ img {
 .feed-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   max-width: 800px;
   width: 100%;
   vertical-align: top;
