@@ -125,3 +125,9 @@ export const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
     name
   }
 }`
+
+export const FOOTER_QUERY = `*[_type == "footer" && isActive == true][0] {
+  _id,
+  text,
+  isActive
+}`

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { client, PROJECT_QUERY, PROJECTS_QUERY } from '@/lib/sanity';
+import { client, PROJECT_QUERY, PROJECTS_QUERY, FOOTER_QUERY } from '@/lib/sanity';
 import ProjectPageClient from './ProjectPageClient';
 
 interface ProjectPageProps {
@@ -34,11 +34,14 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const resolvedParams = await params;
-  const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } });
+  const [project, footer] = await Promise.all([
+    client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } }),
+    client.fetch(FOOTER_QUERY, {}, { next: { revalidate: 0 } })
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  return <ProjectPageClient project={project} />;
+  return <ProjectPageClient project={project} footer={footer} />;
 }

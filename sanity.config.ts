@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 
-import { project, artist, siteSettings, infoPage, page } from './sanity/schemas'
+import { project, artist, siteSettings, infoPage, page, footer } from './sanity/schemas'
 
 const projectId = '46dv8ptd'
 const dataset = 'production'
@@ -14,7 +14,7 @@ export default defineConfig({
   dataset,
   plugins: [structureTool()],
   schema: {
-    types: [project, artist, siteSettings, infoPage, page],
+    types: [project, artist, siteSettings, infoPage, page, footer],
   },
   studio: {
     components: {

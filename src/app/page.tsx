@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client, SITE_SETTINGS_QUERY, urlFor } from "@/lib/sanity";
+import { client, SITE_SETTINGS_QUERY, FOOTER_QUERY, urlFor } from "@/lib/sanity";
+import { PortableText } from '@portabletext/react';
 
 export default async function Home() {
-  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY, {}, { next: { revalidate: 0 } });
+  const [siteSettings, footer] = await Promise.all([
+    client.fetch(SITE_SETTINGS_QUERY, {}, { next: { revalidate: 0 } }),
+    client.fetch(FOOTER_QUERY, {}, { next: { revalidate: 0 } })
+  ]);
   const upcomingExhibition = siteSettings?.upcomingExhibition;
   
   // Debug logging
@@ -87,7 +91,25 @@ export default async function Home() {
         )}
       </div>
       <div className="project-footer">
-        <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
+        {footer?.text ? (
+          <PortableText 
+            value={footer.text}
+            components={{
+              marks: {
+                link: ({ children, value }) => (
+                  <a href={value.href} target="_blank" rel="noopener noreferrer">
+                    {children}
+                  </a>
+                ),
+              },
+              block: {
+                normal: ({ children }) => <p>{children}</p>,
+              },
+            }}
+          />
+        ) : (
+          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
+        )}
       </div>
     </div>
   );

@@ -18,13 +18,13 @@ interface FooterData {
   isActive: boolean;
 }
 
-const Footer = async () => {
+const ProjectFooter = async () => {
   const footer: FooterData | null = await client.fetch(FOOTER_QUERY, {}, { next: { revalidate: 0 } });
   
   const defaultText = "44 Ronadale road, Craryville NY. Open by Appointment";
 
   return (
-    <footer className="footer">
+    <div className="project-footer">
       {footer?.text ? (
         <PortableText 
           value={footer.text}
@@ -44,8 +44,8 @@ const Footer = async () => {
       ) : (
         <p>{defaultText}</p>
       )}
-    </footer>
+    </div>
   );
 };
 
-export default Footer;
+export default ProjectFooter;

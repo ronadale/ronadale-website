@@ -28,11 +28,29 @@ interface SanityPage {
   pressDownloads?: { title: string; file: { asset: { url: string } } }[];
 }
 
-interface PageClientProps {
-  page: SanityPage;
+interface FooterData {
+  _id: string;
+  text: Array<{
+    _type: 'block';
+    children: Array<{
+      _type: 'span';
+      text: string;
+      marks?: string[];
+    }>;
+    markDefs?: Array<{
+      _type: 'link';
+      href: string;
+    }>;
+  }>;
+  isActive: boolean;
 }
 
-export default function PageClient({ page }: PageClientProps) {
+interface PageClientProps {
+  page: SanityPage;
+  footer: FooterData | null;
+}
+
+export default function PageClient({ page, footer }: PageClientProps) {
   const [expandedText, setExpandedText] = useState(false);
 
   const formatDate = (dateString: string) => {
@@ -116,7 +134,25 @@ export default function PageClient({ page }: PageClientProps) {
         </div>
       </div>
       <div className="project-footer">
-        <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
+        {footer?.text ? (
+          <PortableText 
+            value={footer.text}
+            components={{
+              marks: {
+                link: ({ children, value }) => (
+                  <a href={value.href} target="_blank" rel="noopener noreferrer">
+                    {children}
+                  </a>
+                ),
+              },
+              block: {
+                normal: ({ children }) => <p>{children}</p>,
+              },
+            }}
+          />
+        ) : (
+          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
+        )}
       </div>
     </div>
   );
