@@ -48,12 +48,15 @@ export default async function Exhibitions() {
           <>
             <h2>CURRENT:</h2>
             <br />
-            {currentProjects.map((project: SanityProject) => (
-              <Link key={project._id} href={`/exhibitions/${project.slug.current}`} className="project-item">
-                <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
-                <p>{project.title}</p>
-                <p>{formatDateRange(project.startDate, project.endDate)}</p>
-              </Link>
+            {currentProjects.map((project: SanityProject, index: number) => (
+              <div key={project._id}>
+                <Link href={`/exhibitions/${project.slug.current}`} className="project-item">
+                  <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
+                  <p>{project.title}</p>
+                  <p>{formatDateRange(project.startDate, project.endDate)}</p>
+                </Link>
+                {index < currentProjects.length - 1 && <br />}
+              </div>
             ))}
             <br />
           </>
@@ -63,17 +66,20 @@ export default async function Exhibitions() {
           <>
             <h2>UPCOMING:</h2>
             <br />
-            {upcomingProjects.map((project: SanityProject) => (
-              <div key={project._id} style={{ 
-                cursor: 'default',
-                marginBottom: '0',
-                display: 'block',
-                color: 'inherit',
-                textDecoration: 'none'
-              }}>
-                <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
-                <p>{project.title}</p>
-                <p>{formatDateRange(project.startDate, project.endDate)}</p>
+            {upcomingProjects.map((project: SanityProject, index: number) => (
+              <div key={project._id}>
+                <div style={{ 
+                  cursor: 'default',
+                  marginBottom: '0',
+                  display: 'block',
+                  color: 'inherit',
+                  textDecoration: 'none'
+                }}>
+                  <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
+                  <p>{project.title}</p>
+                  <p>{formatDateRange(project.startDate, project.endDate)}</p>
+                </div>
+                {index < upcomingProjects.length - 1 && <br />}
               </div>
             ))}
             <br />
