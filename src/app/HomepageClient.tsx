@@ -147,10 +147,10 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
             <div className="homepage-text">
               <p>{artists}</p>
               {displayContent.title && <p>{displayContent.title}</p>}
-              {(displayContent.startDate || displayContent.date) && (
+              {(('startDate' in displayContent && displayContent.startDate) || ('date' in displayContent && displayContent.date)) && (
                 <p>
                   {formatDateRange(
-                    displayContent.startDate || displayContent.date,
+                    ('startDate' in displayContent ? displayContent.startDate : displayContent.date) || '',
                     displayContent.endDate
                   )}
                 </p>
@@ -161,10 +161,10 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
           <div className="homepage-text">
             <p>{artists}</p>
             {displayContent.title && <p>{displayContent.title}</p>}
-            {(displayContent.startDate || displayContent.date) && (
+            {(('startDate' in displayContent && displayContent.startDate) || ('date' in displayContent && displayContent.date)) && (
               <p>
                 {formatDateRange(
-                  displayContent.startDate || displayContent.date,
+                  ('startDate' in displayContent ? displayContent.startDate : displayContent.date) || '',
                   displayContent.endDate
                 )}
               </p>
