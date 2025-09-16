@@ -23,7 +23,8 @@ const Navigation = () => {
   const handleMailingListClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isMobile) {
-      window.open('https://ronadale.us16.list-manage.com/subscribe?u=ac2562b4eb29481b9b4e402c0&id=16df52952d', '_blank');
+      // Open custom subscription page with only email field
+      window.open('/subscribe', '_blank');
     } else {
       setShowEmailInput(true);
     }
