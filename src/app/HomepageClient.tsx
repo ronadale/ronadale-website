@@ -5,9 +5,68 @@ import Link from "next/link";
 import { urlFor } from "@/lib/sanity";
 import { PortableText } from '@portabletext/react';
 
+interface Artist {
+  name: string;
+}
+
+interface ImageAsset {
+  asset: {
+    _id: string;
+    _ref?: string;
+    url?: string;
+  };
+  caption?: string;
+}
+
+interface Project {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  status: string;
+  startDate?: string;
+  endDate?: string;
+  coverImage?: ImageAsset;
+  images?: ImageAsset[];
+  artists?: Artist[];
+}
+
+interface Page {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  status: string;
+  date?: string;
+  endDate?: string;
+  coverImage?: ImageAsset;
+  images?: ImageAsset[];
+  artists?: Artist[];
+}
+
+interface SiteSettings {
+  upcomingExhibition?: Project;
+  heroPage?: Page;
+}
+
+interface FooterData {
+  _id: string;
+  text: Array<{
+    _type: 'block';
+    children: Array<{
+      _type: 'span';
+      text: string;
+      marks?: string[];
+    }>;
+    markDefs?: Array<{
+      _type: 'link';
+      href: string;
+    }>;
+  }>;
+  isActive: boolean;
+}
+
 interface HomepageClientProps {
-  siteSettings: any;
-  footer: any;
+  siteSettings: SiteSettings;
+  footer: FooterData | null;
 }
 
 export default function HomepageClient({ siteSettings, footer }: HomepageClientProps) {
@@ -41,7 +100,7 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
   // Use hero page if available, otherwise fall back to exhibition
   const displayContent = heroPage || upcomingExhibition;
   const heroImage = displayContent.coverImage || displayContent.images?.[0];
-  const artists = displayContent.artists?.filter((a: any) => a && a.name).map((artist: { name: string }) => artist.name).join(', ');
+  const artists = displayContent.artists?.filter((a: Artist | null | undefined): a is Artist => a !== null && a !== undefined && a.name).map((artist: Artist) => artist.name).join(', ');
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
