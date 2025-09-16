@@ -75,23 +75,38 @@ export const page = defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'isDescriptionCollapsed',
+      title: 'Collapse Description by Default',
+      type: 'boolean',
+      description: 'When enabled, the description will be collapsed by default and require clicking "text" to expand',
+      initialValue: true,
+    },
+    {
       name: 'artists',
       title: 'Artists',
       type: 'array',
       of: [
+        { type: 'reference', to: [{ type: 'artist' }] },
+        // Legacy support for existing manual entries
         {
           type: 'object',
+          name: 'legacyArtist',
+          title: 'Artist (Legacy)',
           fields: [
             {
               name: 'name',
               title: 'Artist Name',
               type: 'string',
-              validation: (Rule) => Rule.required(),
             },
           ],
           preview: {
             select: {
               title: 'name',
+            },
+            prepare(selection) {
+              return {
+                title: `${selection.title} (Legacy)`,
+              };
             },
           },
         },
@@ -99,8 +114,14 @@ export const page = defineType({
     },
     {
       name: 'date',
-      title: 'Date',
+      title: 'Start Date',
       type: 'date',
+    },
+    {
+      name: 'endDate',
+      title: 'End Date',
+      type: 'date',
+      description: 'Optional end date for multi-day events',
     },
     {
       name: 'status',

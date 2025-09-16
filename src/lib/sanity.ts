@@ -41,6 +41,7 @@ export const PROJECT_QUERY = `*[_type == "project" && slug.current == $slug][0] 
   title,
   slug,
   description,
+  isDescriptionCollapsed,
   images[] {
     asset->,
     caption
@@ -81,6 +82,31 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
     artists[]-> {
       name
     }
+  },
+  heroPage-> {
+    _id,
+    title,
+    slug,
+    description,
+    isDescriptionCollapsed,
+    coverImage {
+      asset->
+    },
+    images[] {
+      asset->,
+      caption
+    },
+    status,
+    date,
+    endDate,
+    artists[] {
+      _type == "reference" => @-> {
+        name
+      },
+      _type != "reference" => {
+        name
+      }
+    }
   }
 }`
 
@@ -89,14 +115,21 @@ export const PAGES_QUERY = `*[_type == "page"] | order(_createdAt desc) {
   title,
   slug,
   description,
+  isDescriptionCollapsed,
   images[] {
     asset->,
     caption
   },
   status,
   date,
+  endDate,
   artists[] {
-    name
+    _type == "reference" => @-> {
+      name
+    },
+    _type != "reference" => {
+      name
+    }
   }
 }`
 
@@ -105,6 +138,7 @@ export const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
   title,
   slug,
   description,
+  isDescriptionCollapsed,
   images[] {
     asset->,
     caption
@@ -121,8 +155,14 @@ export const PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0] {
   },
   status,
   date,
+  endDate,
   artists[] {
-    name
+    _type == "reference" => @-> {
+      name
+    },
+    _type != "reference" => {
+      name
+    }
   }
 }`
 

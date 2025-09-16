@@ -59,6 +59,13 @@ export const project = defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'isDescriptionCollapsed',
+      title: 'Collapse Description by Default',
+      type: 'boolean',
+      description: 'When enabled, the description will be collapsed by default and require clicking "text" to expand',
+      initialValue: true,
+    },
+    {
       name: 'artists',
       title: 'Artists',
       type: 'array',

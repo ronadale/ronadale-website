@@ -20,8 +20,10 @@ interface SanityPage {
       href: string;
     }>;
   }>;
+  isDescriptionCollapsed?: boolean;
   artists?: { name: string }[];
   date?: string;
+  endDate?: string;
   status: string;
   images?: { asset: { _id: string; _ref?: string; url?: string }; caption?: string }[];
   pressLinks?: { title: string; url: string }[];
@@ -51,7 +53,7 @@ interface PageClientProps {
 }
 
 export default function PageClient({ page, footer }: PageClientProps) {
-  const [expandedText, setExpandedText] = useState(false);
+  const [expandedText, setExpandedText] = useState(!page.isDescriptionCollapsed);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -61,16 +63,38 @@ export default function PageClient({ page, footer }: PageClientProps) {
     });
   };
 
+  const formatDateRange = (startDate: string, endDate?: string) => {
+    if (!endDate) {
+      return formatDate(startDate);
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Same month and year
+    if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+      return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${end.toLocaleDateString('en-US', { day: 'numeric', year: 'numeric' })}`;
+    }
+
+    // Same year
+    if (start.getFullYear() === end.getFullYear()) {
+      return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+    }
+
+    // Different years
+    return `${formatDate(startDate)} – ${formatDate(endDate)}`;
+  };
+
   return (
     <div>
       <div className="page-content">
         <div>
-          <p>{page.artists?.map(a => a.name).join(', ') || page.title}</p>
+          <p>{page.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || page.title}</p>
           <p>{page.title}</p>
-          <p style={{ marginBottom: 0 }}>{page.date ? formatDate(page.date) : ''}</p>
-          {page.description && (
+          <p style={{ marginBottom: 0 }}>{page.date ? formatDateRange(page.date, page.endDate) : ''}</p>
+          {page.description && page.isDescriptionCollapsed && (
             <p style={{ marginBottom: '1em' }}>
-              <a 
+              <a
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
@@ -81,8 +105,8 @@ export default function PageClient({ page, footer }: PageClientProps) {
               </a>
             </p>
           )}
-          {expandedText && page.description && (
-            <div className="content-width">
+          {(expandedText || !page.isDescriptionCollapsed) && page.description && (
+            <div className="content-width" style={{ marginTop: '1em' }}>
               {typeof page.description === 'string' ? (
                 <p>{page.description}</p>
               ) : (

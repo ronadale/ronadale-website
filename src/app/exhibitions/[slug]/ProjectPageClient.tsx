@@ -20,6 +20,7 @@ interface SanityProject {
       href: string;
     }>;
   }>;
+  isDescriptionCollapsed?: boolean;
   artists?: { name: string; bio?: string }[];
   startDate?: string;
   endDate?: string;
@@ -52,7 +53,7 @@ interface ProjectPageClientProps {
 }
 
 export default function ProjectPageClient({ project, footer }: ProjectPageClientProps) {
-  const [expandedText, setExpandedText] = useState(false);
+  const [expandedText, setExpandedText] = useState(!project.isDescriptionCollapsed);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -73,12 +74,12 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
     <div>
       <div className="page-content">
         <div>
-          <p>{project.artists?.map(a => a.name).join(', ') || project.title}</p>
+          <p>{project.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || project.title}</p>
           <p>{project.title}</p>
           <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
-          {project.description && (
+          {project.description && project.isDescriptionCollapsed && (
             <p style={{ marginBottom: '1em' }}>
-              <a 
+              <a
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
@@ -89,8 +90,8 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
               </a>
             </p>
           )}
-          {expandedText && project.description && (
-            <div className="content-width">
+          {(expandedText || !project.isDescriptionCollapsed) && project.description && (
+            <div className="content-width" style={{ marginTop: '1em' }}>
               {typeof project.description === 'string' ? (
                 <p style={{ whiteSpace: 'pre-wrap' }}>{project.description}</p>
               ) : (
