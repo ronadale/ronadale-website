@@ -99,6 +99,12 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
 
   // Use hero page if available, otherwise fall back to exhibition
   const displayContent = heroPage || upcomingExhibition;
+
+  // This should never happen due to the early return above, but TypeScript needs the guard
+  if (!displayContent) {
+    return null;
+  }
+
   const heroImage = displayContent.coverImage || displayContent.images?.[0];
   const artists = displayContent.artists?.filter((a: Artist | null | undefined): a is Artist => a !== null && a !== undefined && a.name).map((artist: Artist) => artist.name).join(', ');
 
