@@ -106,7 +106,7 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
   }
 
   const heroImage = displayContent.coverImage || displayContent.images?.[0];
-  const artists = displayContent.artists?.filter((a: Artist | null | undefined): a is Artist => a !== null && a !== undefined && a.name).map((artist: Artist) => artist.name).join(', ');
+  const artists = displayContent.artists?.filter((a: Artist | null | undefined): a is Artist => a !== null && a !== undefined && Boolean(a.name)).map((artist: Artist) => artist.name).join(', ');
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
