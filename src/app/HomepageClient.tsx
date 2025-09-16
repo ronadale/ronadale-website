@@ -150,7 +150,7 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
               {(('startDate' in displayContent && displayContent.startDate) || ('date' in displayContent && displayContent.date)) && (
                 <p>
                   {formatDateRange(
-                    ('startDate' in displayContent ? displayContent.startDate : displayContent.date) || '',
+                    ('startDate' in displayContent ? displayContent.startDate : (displayContent as Page).date) || '',
                     displayContent.endDate
                   )}
                 </p>
@@ -164,7 +164,7 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
             {(('startDate' in displayContent && displayContent.startDate) || ('date' in displayContent && displayContent.date)) && (
               <p>
                 {formatDateRange(
-                  ('startDate' in displayContent ? displayContent.startDate : displayContent.date) || '',
+                  ('startDate' in displayContent ? displayContent.startDate : (displayContent as Page).date) || '',
                   displayContent.endDate
                 )}
               </p>
