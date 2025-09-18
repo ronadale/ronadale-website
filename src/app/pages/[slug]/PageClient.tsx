@@ -60,7 +60,7 @@ export default function PageClient({ page, footer }: PageClientProps) {
     if (typeof page.description === 'string') return false;
     if (!Array.isArray(page.description)) return false;
 
-    return page.description.some((block: any) =>
+    return page.description.some((block: { _type: string; style?: string }) =>
       block._type === 'block' && block.style === 'helvetica'
     );
   };
