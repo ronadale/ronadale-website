@@ -28,7 +28,8 @@ export const project = defineType({
         {
           type: 'block',
           styles: [
-            { title: 'Normal', value: 'normal' }
+            { title: 'Normal (Comic Sans)', value: 'normal' },
+            { title: 'Helvetica', value: 'helvetica' }
           ],
           lists: [],
           marks: {
@@ -45,6 +46,19 @@ export const project = defineType({
                     title: 'URL',
                     name: 'href',
                     type: 'url',
+                  },
+                ],
+              },
+              {
+                title: 'Email',
+                name: 'emailLink',
+                type: 'object',
+                icon: () => '@',
+                fields: [
+                  {
+                    title: 'Email Address',
+                    name: 'email',
+                    type: 'string',
                   },
                 ],
               },
@@ -122,7 +136,8 @@ export const project = defineType({
                 {
                   type: 'block',
                   styles: [
-                    { title: 'Normal', value: 'normal' }
+                    { title: 'Normal (Comic Sans)', value: 'normal' },
+                    { title: 'Helvetica', value: 'helvetica' }
                   ],
                   lists: [],
                   marks: {
@@ -142,28 +157,21 @@ export const project = defineType({
                           },
                         ],
                       },
+                      {
+                        title: 'Email',
+                        name: 'emailLink',
+                        type: 'object',
+                        icon: () => '@',
+                        fields: [
+                          {
+                            title: 'Email Address',
+                            name: 'email',
+                            type: 'string',
+                          },
+                        ],
+                      },
                     ],
                   },
-                },
-                {
-                  type: 'object',
-                  name: 'lineBreak',
-                  title: 'Line Break',
-                  fields: [
-                    {
-                      name: 'style',
-                      type: 'string',
-                      initialValue: 'lineBreak',
-                    }
-                  ],
-                  preview: {
-                    prepare() {
-                      return {
-                        title: 'Line Break',
-                        subtitle: '---'
-                      }
-                    }
-                  }
                 },
               ],
             },

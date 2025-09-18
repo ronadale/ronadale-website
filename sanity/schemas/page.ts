@@ -28,7 +28,8 @@ export const page = defineType({
         {
           type: 'block',
           styles: [
-            { title: 'Normal', value: 'normal' }
+            { title: 'Normal (Comic Sans)', value: 'normal' },
+            { title: 'Helvetica', value: 'helvetica' }
           ],
           lists: [],
           marks: {
@@ -48,28 +49,21 @@ export const page = defineType({
                   },
                 ],
               },
+              {
+                title: 'Email',
+                name: 'emailLink',
+                type: 'object',
+                icon: () => '@',
+                fields: [
+                  {
+                    title: 'Email Address',
+                    name: 'email',
+                    type: 'string',
+                  },
+                ],
+              },
             ],
           },
-        },
-        {
-          type: 'object',
-          name: 'lineBreak',
-          title: 'Line Break',
-          fields: [
-            {
-              name: 'style',
-              type: 'string',
-              initialValue: 'lineBreak',
-            }
-          ],
-          preview: {
-            prepare() {
-              return {
-                title: 'Line Break',
-                subtitle: '---'
-              }
-            }
-          }
         },
       ],
       validation: (Rule) => Rule.required(),
@@ -167,7 +161,8 @@ export const page = defineType({
                 {
                   type: 'block',
                   styles: [
-                    { title: 'Normal', value: 'normal' }
+                    { title: 'Normal (Comic Sans)', value: 'normal' },
+                    { title: 'Helvetica', value: 'helvetica' }
                   ],
                   lists: [],
                   marks: {
@@ -187,28 +182,21 @@ export const page = defineType({
                           },
                         ],
                       },
+                      {
+                        title: 'Email',
+                        name: 'emailLink',
+                        type: 'object',
+                        icon: () => '@',
+                        fields: [
+                          {
+                            title: 'Email Address',
+                            name: 'email',
+                            type: 'string',
+                          },
+                        ],
+                      },
                     ],
                   },
-                },
-                {
-                  type: 'object',
-                  name: 'lineBreak',
-                  title: 'Line Break',
-                  fields: [
-                    {
-                      name: 'style',
-                      type: 'string',
-                      initialValue: 'lineBreak',
-                    }
-                  ],
-                  preview: {
-                    prepare() {
-                      return {
-                        title: 'Line Break',
-                        subtitle: '---'
-                      }
-                    }
-                  }
                 },
               ],
             },

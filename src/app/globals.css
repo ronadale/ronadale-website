@@ -268,8 +268,24 @@ img {
 
 
 .content-width {
-  max-width: 800px;
+  max-width: 40em;
   width: 100%;
+}
+
+.helvetica-text {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.4;
+  letter-spacing: 0.6px;
+}
+
+.helvetica-text a.helvetica-email-link {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.4;
+  letter-spacing: 0.6px;
 }
 
 .homepage-layout {

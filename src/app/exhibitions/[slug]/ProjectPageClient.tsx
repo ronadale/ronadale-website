@@ -55,6 +55,18 @@ interface ProjectPageClientProps {
 export default function ProjectPageClient({ project, footer }: ProjectPageClientProps) {
   const [expandedText, setExpandedText] = useState(!project.isDescriptionCollapsed);
 
+  // Check if description contains Helvetica formatting
+  const hasHelveticaFormatting = () => {
+    if (typeof project.description === 'string') return false;
+    if (!Array.isArray(project.description)) return false;
+
+    return project.description.some(block =>
+      block.style === 'helvetica'
+    );
+  };
+
+  const useHelveticaStyle = hasHelveticaFormatting();
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -74,9 +86,9 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
     <div>
       <div className="page-content">
         <div>
-          <p>{project.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || project.title}</p>
-          <p>{project.title}</p>
-          <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{project.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || project.title}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{project.title}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''} style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
           {project.description && project.isDescriptionCollapsed && (
             <p style={{ marginBottom: '1em' }}>
               <a
@@ -96,15 +108,21 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
                 <p style={{ whiteSpace: 'pre-wrap' }}>{project.description}</p>
               ) : (
                 <div style={{ whiteSpace: 'pre-line' }}>
-                  <PortableText 
+                  <PortableText
                     value={project.description}
                     components={{
                       block: {
                         normal: ({ children }) => <p>{children}</p>,
+                        helvetica: ({ children }) => <p className="helvetica-text">{children}</p>,
                       },
                       marks: {
                         link: ({ children, value }) => (
                           <a href={value.href} target="_blank" rel="noopener noreferrer">
+                            {children}
+                          </a>
+                        ),
+                        emailLink: ({ children, value }) => (
+                          <a href={`mailto:${value.email}`} className="helvetica-email-link">
                             {children}
                           </a>
                         ),
@@ -149,21 +167,24 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
       </div>
       {footer?.text && (
         <div className="project-footer">
-          <PortableText 
+          <PortableText
             value={footer.text}
             components={{
+              block: {
+                normal: ({ children }) => <p>{children}</p>,
+                helvetica: ({ children }) => <p className="helvetica-text">{children}</p>,
+              },
               marks: {
                 link: ({ children, value }) => (
                   <a href={value.href} target="_blank" rel="noopener noreferrer">
                     {children}
                   </a>
                 ),
-              },
-              block: {
-                normal: ({ children }) => <p>{children}</p>,
-              },
-              types: {
-                lineBreak: () => <br />,
+                emailLink: ({ children, value }) => (
+                  <a href={`mailto:${value.email}`} className="helvetica-email-link">
+                    {children}
+                  </a>
+                ),
               },
             }}
           />

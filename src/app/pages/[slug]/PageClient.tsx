@@ -55,6 +55,18 @@ interface PageClientProps {
 export default function PageClient({ page, footer }: PageClientProps) {
   const [expandedText, setExpandedText] = useState(!page.isDescriptionCollapsed);
 
+  // Check if description contains Helvetica formatting
+  const hasHelveticaFormatting = () => {
+    if (typeof page.description === 'string') return false;
+    if (!Array.isArray(page.description)) return false;
+
+    return page.description.some(block =>
+      block.style === 'helvetica'
+    );
+  };
+
+  const useHelveticaStyle = hasHelveticaFormatting();
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -89,9 +101,9 @@ export default function PageClient({ page, footer }: PageClientProps) {
     <div>
       <div className="page-content">
         <div>
-          <p>{page.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || page.title}</p>
-          <p>{page.title}</p>
-          <p style={{ marginBottom: 0 }}>{page.date ? formatDateRange(page.date, page.endDate) : ''}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{page.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || page.title}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{page.title}</p>
+          <p className={useHelveticaStyle ? 'helvetica-text' : ''} style={{ marginBottom: 0 }}>{page.date ? formatDateRange(page.date, page.endDate) : ''}</p>
           {page.description && page.isDescriptionCollapsed && (
             <p style={{ marginBottom: '1em' }}>
               <a
@@ -110,18 +122,24 @@ export default function PageClient({ page, footer }: PageClientProps) {
               {typeof page.description === 'string' ? (
                 <p>{page.description}</p>
               ) : (
-                <PortableText 
+                <PortableText
                   value={page.description}
                   components={{
+                    block: {
+                      normal: ({ children }) => <p>{children}</p>,
+                      helvetica: ({ children }) => <p className="helvetica-text">{children}</p>,
+                    },
                     marks: {
                       link: ({ children, value }) => (
                         <a href={value.href} target="_blank" rel="noopener noreferrer">
                           {children}
                         </a>
                       ),
-                    },
-                    types: {
-                      lineBreak: () => <br />,
+                      emailLink: ({ children, value }) => (
+                        <a href={`mailto:${value.email}`} className="helvetica-email-link">
+                          {children}
+                        </a>
+                      ),
                     },
                   }}
                 />
@@ -162,21 +180,24 @@ export default function PageClient({ page, footer }: PageClientProps) {
       </div>
       {footer?.text && (
         <div className="project-footer">
-          <PortableText 
+          <PortableText
             value={footer.text}
             components={{
+              block: {
+                normal: ({ children }) => <p>{children}</p>,
+                helvetica: ({ children }) => <p className="helvetica-text">{children}</p>,
+              },
               marks: {
                 link: ({ children, value }) => (
                   <a href={value.href} target="_blank" rel="noopener noreferrer">
                     {children}
                   </a>
                 ),
-              },
-              block: {
-                normal: ({ children }) => <p>{children}</p>,
-              },
-              types: {
-                lineBreak: () => <br />,
+                emailLink: ({ children, value }) => (
+                  <a href={`mailto:${value.email}`}>
+                    {children}
+                  </a>
+                ),
               },
             }}
           />
