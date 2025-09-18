@@ -36,7 +36,7 @@ export default function Subscribe() {
         setStatus('error');
         setMessage(data.error);
       }
-    } catch (error) {
+    } catch {
       setStatus('error');
       setMessage('Failed to subscribe. Please try again.');
     }

@@ -60,8 +60,8 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
     if (typeof project.description === 'string') return false;
     if (!Array.isArray(project.description)) return false;
 
-    return project.description.some(block =>
-      block.style === 'helvetica'
+    return project.description.some((block: any) =>
+      block._type === 'block' && block.style === 'helvetica'
     );
   };
 

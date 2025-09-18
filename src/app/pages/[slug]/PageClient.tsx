@@ -60,8 +60,8 @@ export default function PageClient({ page, footer }: PageClientProps) {
     if (typeof page.description === 'string') return false;
     if (!Array.isArray(page.description)) return false;
 
-    return page.description.some(block =>
-      block.style === 'helvetica'
+    return page.description.some((block: any) =>
+      block._type === 'block' && block.style === 'helvetica'
     );
   };
 
