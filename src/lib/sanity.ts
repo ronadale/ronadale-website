@@ -171,3 +171,8 @@ export const FOOTER_QUERY = `*[_type == "footer" && isActive == true][0] {
   text,
   isActive
 }`
+
+export const INFO_PAGE_QUERY = `*[_type == "infoPage"][0] {
+  _id,
+  content
+}`
