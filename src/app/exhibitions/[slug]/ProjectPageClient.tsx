@@ -26,6 +26,15 @@ interface SanityProject {
   endDate?: string;
   status: string;
   images?: { asset: { _id: string; _ref?: string; url?: string }; caption?: string }[];
+  supportSection?: {
+    heading?: string;
+    logos?: Array<{
+      asset: { _id: string; _ref?: string; url?: string };
+      alt: string;
+      url?: string;
+      isBlackAndWhite?: boolean;
+    }>;
+  };
   pressLinks?: { title: string; url: string }[];
   pressDownloads?: { title: string; file: { asset: { url: string } } }[];
 }
@@ -131,7 +140,38 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
                   />
                 </div>
               )}
-              
+
+              {project.supportSection && project.supportSection.logos && project.supportSection.logos.length > 0 && (
+                <div style={{ marginTop: '2em' }}>
+                  {project.supportSection.heading && <p style={{ marginBottom: '1em' }}>{project.supportSection.heading}</p>}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1em' }}>
+                    {project.supportSection.logos.map((logo, index) => {
+                      const logoContent = (
+                        <img
+                          key={index}
+                          src={logo.asset.url}
+                          alt={logo.alt}
+                          style={{
+                            width: '20%',
+                            minWidth: '80px',
+                            height: 'auto',
+                            filter: logo.isBlackAndWhite ? 'grayscale(100%)' : 'none'
+                          }}
+                        />
+                      );
+
+                      return logo.url ? (
+                        <a key={index} href={logo.url} target="_blank" rel="noopener noreferrer">
+                          {logoContent}
+                        </a>
+                      ) : (
+                        logoContent
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {(project.pressLinks && project.pressLinks.length > 0) || (project.pressDownloads && project.pressDownloads.length > 0) ? (
                 <div style={{ marginTop: '1em' }}>
                   <p>Press:</p>

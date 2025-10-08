@@ -46,6 +46,15 @@ export const PROJECT_QUERY = `*[_type == "project" && slug.current == $slug][0] 
     asset->,
     caption
   },
+  supportSection {
+    heading,
+    logos[] {
+      asset->,
+      alt,
+      url,
+      isBlackAndWhite
+    }
+  },
   pressLinks[] {
     title,
     url

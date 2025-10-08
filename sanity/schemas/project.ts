@@ -104,6 +104,7 @@ export const project = defineType({
           { title: 'Current', value: 'current' },
           { title: 'Upcoming', value: 'upcoming' },
           { title: 'Past', value: 'past' },
+          { title: 'Test', value: 'test' },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -176,6 +177,54 @@ export const project = defineType({
               ],
             },
           ],
+        },
+      ],
+    },
+    {
+      name: 'supportSection',
+      title: 'Support Section',
+      type: 'object',
+      description: 'Optional section to display supporter logos after the description',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading Text',
+          type: 'string',
+          description: 'e.g., "Generously supported by:"',
+        },
+        {
+          name: 'logos',
+          title: 'Logos',
+          type: 'array',
+          of: [
+            {
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  title: 'Alt Text',
+                  type: 'string',
+                  validation: (Rule) => Rule.required(),
+                },
+                {
+                  name: 'url',
+                  title: 'Link URL (optional)',
+                  type: 'url',
+                },
+                {
+                  name: 'isBlackAndWhite',
+                  title: 'Display in Black and White',
+                  type: 'boolean',
+                  description: 'Convert logo to grayscale',
+                  initialValue: false,
+                },
+              ],
+            },
+          ],
+          description: 'Logos will be displayed in a row, each taking ~20% of the column width',
         },
       ],
     },
