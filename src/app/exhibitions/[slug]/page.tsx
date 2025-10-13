@@ -19,16 +19,22 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const project = await client.fetch(PROJECT_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } });
-  
+
   if (!project) {
     return {
       title: 'Project Not Found',
     };
   }
 
+  // Use artist names if no title, or if title matches artists
+  const artistNames = project.artists?.filter((a: { name: string }) => a && a.name).map((a: { name: string }) => a.name).join(', ');
+  const pageTitle = (!project.title || (artistNames && project.title === artistNames)) && artistNames
+    ? artistNames
+    : project.title;
+
   return {
-    title: project.title,
-    description: project.description || project.title,
+    title: pageTitle,
+    description: project.description || pageTitle,
   };
 }
 

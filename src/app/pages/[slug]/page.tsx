@@ -19,16 +19,22 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const page = await client.fetch(PAGE_QUERY, { slug: resolvedParams.slug }, { next: { revalidate: 0 } });
-  
+
   if (!page) {
     return {
       title: 'Page Not Found',
     };
   }
 
+  // Use artist names if no title, or if title matches artists
+  const artistNames = page.artists?.filter((a: { name: string }) => a && a.name).map((a: { name: string }) => a.name).join(', ');
+  const pageTitle = (!page.title || (artistNames && page.title === artistNames)) && artistNames
+    ? artistNames
+    : page.title;
+
   return {
-    title: page.title,
-    description: typeof page.description === 'string' ? page.description : page.title,
+    title: pageTitle,
+    description: typeof page.description === 'string' ? page.description : pageTitle,
   };
 }
 
