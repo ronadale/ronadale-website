@@ -64,18 +64,6 @@ interface ProjectPageClientProps {
 export default function ProjectPageClient({ project, footer }: ProjectPageClientProps) {
   const [expandedText, setExpandedText] = useState(!project.isDescriptionCollapsed);
 
-  // Check if description contains Helvetica formatting
-  const hasHelveticaFormatting = () => {
-    if (typeof project.description === 'string') return false;
-    if (!Array.isArray(project.description)) return false;
-
-    return project.description.some((block: { _type: string; style?: string }) =>
-      block._type === 'block' && block.style === 'helvetica'
-    );
-  };
-
-  const useHelveticaStyle = hasHelveticaFormatting();
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -95,9 +83,9 @@ export default function ProjectPageClient({ project, footer }: ProjectPageClient
     <div>
       <div className="page-content">
         <div>
-          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{project.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || project.title}</p>
-          <p className={useHelveticaStyle ? 'helvetica-text' : ''}>{project.title}</p>
-          <p className={useHelveticaStyle ? 'helvetica-text' : ''} style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
+          <p>{project.artists?.filter(a => a && a.name).map(a => a.name).join(', ') || project.title}</p>
+          <p>{project.title}</p>
+          <p style={{ marginBottom: 0 }}>{formatDateRange(project.startDate, project.endDate)}</p>
           {project.description && project.isDescriptionCollapsed && (
             <p style={{ marginBottom: '1em' }}>
               <a

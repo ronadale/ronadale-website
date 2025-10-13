@@ -77,15 +77,21 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                   ) : (
                     // New rich text captions
                     <div style={{ whiteSpace: 'pre-line' }}>
-                      <PortableText 
+                      <PortableText
                         value={image.caption}
                         components={{
                           block: {
                             normal: ({ children }) => <p>{children}</p>,
+                            helvetica: ({ children }) => <p className="helvetica-text">{children}</p>,
                           },
                           marks: {
                             link: ({ children, value }) => (
                               <a href={value.href} target="_blank" rel="noopener noreferrer">
+                                {children}
+                              </a>
+                            ),
+                            emailLink: ({ children, value }) => (
+                              <a href={`mailto:${value.email}`} className="helvetica-email-link">
                                 {children}
                               </a>
                             ),
