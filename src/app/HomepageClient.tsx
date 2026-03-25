@@ -93,10 +93,9 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
 
       return (
         <div>
-          <div className="homepage-layout">
-            <div className="homepage-text" />
+          <div className="homepage-layout homepage-layout--centered">
             {heroImageLink?.slug?.current ? (
-              <Link href={`/exhibitions/${heroImageLink.slug.current}`}>
+              <Link href={`/exhibitions/${heroImageLink.slug.current}`} className="homepage-image-link">
                 {imageElement}
               </Link>
             ) : (
@@ -220,7 +219,7 @@ export default function HomepageClient({ siteSettings, footer }: HomepageClientP
         {heroImage?.asset ? (
           // Link if it's a hero page OR if it's a current exhibition
           (heroPage || (upcomingExhibition && upcomingExhibition.status === 'current')) ? (
-            <Link href={heroPage ? `/pages/${heroPage.slug.current}` : `/exhibitions/${upcomingExhibition!.slug.current}`}>
+            <Link href={heroPage ? `/pages/${heroPage.slug.current}` : `/exhibitions/${upcomingExhibition!.slug.current}`} className="homepage-image-link">
               <Image
                 src={urlFor(heroImage.asset).width(1200).quality(90).url()}
                 alt={heroImage.caption || displayContent.title || `Image${artists ? ' for ' + artists : ''}`}

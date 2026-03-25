@@ -344,8 +344,25 @@ a:visited .homepage-text {
   color: inherit;
 }
 
-a .homepage-image {
+.homepage-image-link {
   cursor: pointer;
+  display: inline-block;
+}
+
+.homepage-layout--centered {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 1000px) {
+  .homepage-layout--centered {
+    display: flex;
+    justify-content: center;
+  }
+
+  .homepage-layout--centered .homepage-image {
+    max-width: 600px;
+  }
 }
 
 @media (max-width: 480px) {
