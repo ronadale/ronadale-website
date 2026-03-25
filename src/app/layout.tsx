@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const siteTitle = "RONADALE";
-const siteDescription = "44 Ronadale road, Craryville NY. Open by Appointment";
+const siteDescription = "Located in Craryville, NY. Open by appointment. Contact info@ronadale.com for scheduling and address";
 const siteUrl = "https://ronadale.com";
 const heroImage = "/hero.jpg";
 
