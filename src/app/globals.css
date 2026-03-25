@@ -349,6 +349,10 @@ a:visited .homepage-text {
   display: inline-block;
 }
 
+.homepage-image-link img {
+  cursor: pointer;
+}
+
 .homepage-layout--centered {
   display: flex;
   justify-content: center;
