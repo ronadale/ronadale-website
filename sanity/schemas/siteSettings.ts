@@ -10,17 +10,10 @@ export const siteSettings = defineType({
       title: 'Featured Exhibition',
       type: 'reference',
       to: [{ type: 'project' }],
-      description: 'Select the exhibition to feature on the homepage (required if no hero page is selected)',
+      description: 'Select the exhibition to feature on the homepage',
       options: {
         filter: 'status in ["current", "upcoming"]',
       },
-      validation: (Rule) => Rule.custom((exhibition, context) => {
-        const heroPage = context.document?.heroPage;
-        if (!exhibition && !heroPage) {
-          return 'Either a Featured Exhibition or Hero Page must be selected';
-        }
-        return true;
-      }),
     },
     {
       name: 'heroPage',
@@ -31,13 +24,22 @@ export const siteSettings = defineType({
       options: {
         filter: 'status == "published"',
       },
-      validation: (Rule) => Rule.custom((heroPage, context) => {
-        const exhibition = context.document?.upcomingExhibition;
-        if (!heroPage && !exhibition) {
-          return 'Either a Hero Page or Featured Exhibition must be selected';
-        }
-        return true;
-      }),
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Standalone image for the homepage when no exhibition or hero page is active',
+      options: {
+        hotspot: true,
+      },
+    },
+    {
+      name: 'heroImageLink',
+      title: 'Hero Image Link',
+      type: 'reference',
+      to: [{ type: 'project' }],
+      description: 'Optional: link the hero image to an exhibition',
     },
   ],
   preview: {

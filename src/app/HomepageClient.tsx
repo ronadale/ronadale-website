@@ -45,6 +45,8 @@ interface Page {
 interface SiteSettings {
   upcomingExhibition?: Project;
   heroPage?: Page;
+  heroImage?: ImageAsset;
+  heroImageLink?: { slug: { current: string } };
 }
 
 interface FooterData {
@@ -72,26 +74,68 @@ interface HomepageClientProps {
 export default function HomepageClient({ siteSettings, footer }: HomepageClientProps) {
   const upcomingExhibition = siteSettings?.upcomingExhibition;
   const heroPage = siteSettings?.heroPage;
+  const standaloneHeroImage = siteSettings?.heroImage;
+  const heroImageLink = siteSettings?.heroImageLink;
 
-  // Debug logging for linking logic
-  const shouldLink = heroPage || (upcomingExhibition && upcomingExhibition.status === 'current');
-  console.log('CLIENT shouldLink:', shouldLink);
-  console.log('CLIENT heroPage exists:', !!heroPage);
-  console.log('CLIENT Link URL would be:', heroPage ? `/pages/${heroPage.slug.current}` : 'no link');
-  console.log('CLIENT heroPage.slug:', heroPage?.slug);
-  console.log('CLIENT Full condition result:', (heroPage || (upcomingExhibition && upcomingExhibition.status === 'current')));
-
+  // Standalone hero image mode: no exhibition or hero page, just an image
   if (!upcomingExhibition && !heroPage) {
+    if (standaloneHeroImage?.asset) {
+      const imageElement = (
+        <Image
+          src={urlFor(standaloneHeroImage.asset).width(1200).quality(90).url()}
+          alt="RONADALE"
+          width={1200}
+          height={0}
+          priority
+          className="homepage-image"
+        />
+      );
+
+      return (
+        <div>
+          <div className="homepage-layout">
+            <div className="homepage-text" />
+            {heroImageLink?.slug?.current ? (
+              <Link href={`/exhibitions/${heroImageLink.slug.current}`}>
+                {imageElement}
+              </Link>
+            ) : (
+              imageElement
+            )}
+          </div>
+          {footer?.text && (
+            <div className="project-footer">
+              <PortableText
+                value={footer.text}
+                components={{
+                  marks: {
+                    link: ({ children, value }) => (
+                      <a href={value.href} target="_blank" rel="noopener noreferrer">
+                        {children}
+                      </a>
+                    ),
+                  },
+                  block: {
+                    normal: ({ children }) => <p>{children}</p>,
+                  },
+                  types: {
+                    lineBreak: () => <br />,
+                  },
+                }}
+              />
+            </div>
+          )}
+        </div>
+      );
+    }
+
     return (
       <div>
         <div className="home-layout">
           <div className="text-section">
             <p>No content selected for homepage</p>
-            <p>Please configure either a Featured Exhibition or Hero Page in Studio</p>
+            <p>Please configure the homepage in Studio</p>
           </div>
-        </div>
-        <div className="project-footer">
-          <p>44 Ronadale road, Craryville NY. Open by Appointment</p>
         </div>
       </div>
     );
