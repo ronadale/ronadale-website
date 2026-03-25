@@ -344,6 +344,10 @@ a:visited .homepage-text {
   color: inherit;
 }
 
+a .homepage-image {
+  cursor: pointer;
+}
+
 @media (max-width: 480px) {
   .content-width {
     width: 100%;
